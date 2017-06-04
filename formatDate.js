@@ -1,4 +1,4 @@
-function formatDate(formatStr,Date) {
+function formatDate(formatStr,date) {
   // 此转换器的核心是，将时间对象格式化为yyyy-MM-dd hh:mm:ss这样的形式
   // 使用正则表达式进行匹配替换
 
@@ -6,15 +6,16 @@ function formatDate(formatStr,Date) {
   let str = ''
   // 因为年份可能需要截取，所以单独拎出来替换，根据格式化字符串的长度来确定到底需要留几个字符串
   if(/(y+)/.test(formatStr)){
-    str = formatStr.replace(RegExp.$1, Date.getFullYear().toString().substr(RegExp.$1.length))
+    let veryYear = date.getFullYear().toString()
+    str = formatStr.replace(RegExp.$1, veryYear.substr(veryYear.length - RegExp.$1.length))
   }
 
   let o = {
-    'M+' : Date.getMonth() + 1,
-    'd+' : Date.getDate(),
-    'h+' : Date.getHours(),
-    'm+' : Date.getMinutes(),
-    's+' : Date.getSeconds()
+    'M+' : date.getMonth() + 1,
+    'd+' : date.getDate(),
+    'h+' : date.getHours(),
+    'm+' : date.getMinutes(),
+    's+' : date.getSeconds()
   }
 
   // 循环匹配，直到匹配完所有格式化字符串为止
