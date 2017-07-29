@@ -28,7 +28,7 @@ function formatDate(formatStr,date) {
   }
   return str
 
-  // 补0函数
+  // 补0函数，需要保留多少位，就加多少个0在前面
   function addZreo(num){
     let str = num.toString()
     return ('00' + str).substr(str.length)
