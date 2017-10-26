@@ -1,5 +1,5 @@
-@formatStr String 'yy-MM-dd hh:mm:ss'
-@params Object {date: Date, localize: Boolean}
+//@formatStr String 'yy-MM-dd hh:mm:ss'
+//@params Object {date: Date, localize: Boolean}
 function formatDate(formatStr, opt) {
   let date = opt.date
   // 初始化一个最后返回的变量
