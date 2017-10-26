@@ -1,30 +1,30 @@
-//@formatStr String 'yy-MM-dd hh:mm:ss'
-//@params Object {date: Date, localize: Boolean}
-function formatDate(formatStr, opt) {
-  let date = opt.date
+// @formatStr String 'yy-MM-dd hh:mm:ss'
+// @params Object {date: Date, localize: Boolean}
+function formatDate(formatStr, params) {
+  let date = params.date || new Date()
   // 初始化一个最后返回的变量
-  let str = formatStr 
-  let localize = opt.localize
+  let str = formatStr
+  let localize = params.localize
   // 因为年份可能需要截取，所以单独拎出来替换，根据格式化字符串的长度来确定到底需要留几个字符串
   if (/(y+)/.test(formatStr)) {
-    if(localize) {
+    if (localize) {
       let veryYear = date.getFullYear().toString()
-    	str = str.replace(RegExp.$1 + '-', veryYear.substr(veryYear.length - RegExp.$1.length) + '年')
-    }else {
+      str = str.replace(RegExp.$1 + '-', veryYear.substr(veryYear.length - RegExp.$1.length) + '年')
+    } else {
       let veryYear = date.getFullYear().toString()
-    	str = str.replace(RegExp.$1, veryYear.substr(veryYear.length - RegExp.$1.length))
+      str = str.replace(RegExp.$1, veryYear.substr(veryYear.length - RegExp.$1.length))
     }
   }
-	
-  
+
+  // 创建匹配模式
   const createPattern = (isLocalize, date) => {
     let o = {}
-    if(isLocalize) {
-        o = {
+    if (isLocalize) {
+      o = {
         'M+-': date.getMonth() + 1 + '月',
-        'd+\s?': date.getDate() + '日',
-        'h+:': date.getHours() + '时',
-        'm+:': date.getMinutes() + '分',
+        'd+\\s?': date.getDate() + '日',
+        'h+:?': date.getHours() + '时',
+        'm+:?': date.getMinutes() + '分',
         's+': date.getSeconds() + '秒'
       }
     } else {
@@ -38,9 +38,9 @@ function formatDate(formatStr, opt) {
     }
     return o
   }
-  
-  let pattern = createPattern(true, date)
-  
+
+  let pattern = createPattern(localize, date)
+
   // 循环匹配，直到匹配完所有格式化字符串为止
   for (let i in pattern) {
     // 正则表达式中RegExp.$1要先进行test，exec等匹配方法之后才能获取
